@@ -1,28 +1,49 @@
-import { describe, it, expect } from 'vitest'
-
+import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { createTestingPinia } from '@pinia/testing'
+import { useUsersStore } from '@/stores/users'
 import UserList from '../UserList.vue'
+import TEST_USERS from '@/mocks/users'
 
 describe('UserList', () => {
-  it('renders a list item for each user', () => {
-    const wrapper = mount(UserList)
+  let wrapper
+  let store
 
-    expect(wrapper.findAll('tbody tr')).toHaveLength(3)
+  beforeEach(() => {
+    wrapper = mount(UserList, {
+      global: {
+        plugins: [createTestingPinia({
+          initialState: {
+            users: {
+              users: TEST_USERS
+            }
+          },
+        })],
+      },
+    })
+
+    store = useUsersStore()
+  })
+
+  it('loads users on mount', () => {
+    expect(store.loadUsers).toHaveBeenCalledOnce()
+  })
+
+  it('renders a list item for each user', () => {
+    expect(wrapper.findAll('tbody tr')).toHaveLength(TEST_USERS.length)
   })
 
   it('renders a name, email and avatar for each user', () => {
-    const wrapper = mount(UserList)
+    expect(wrapper.text()).toContain(TEST_USERS[0].name)
+    expect(wrapper.text()).toContain(TEST_USERS[0].email)
+    expect(wrapper.findAll('img')[0].attributes('src')).toContain(TEST_USERS[0].email)
 
-    expect(wrapper.text()).toContain('John Doe')
-    expect(wrapper.text()).toContain('john@doe.com')
-    expect(wrapper.findAll('img')[0].attributes('src')).toBe('https://i.pravatar.cc/40?u=1')
+    expect(wrapper.text()).toContain(TEST_USERS[1].name)
+    expect(wrapper.text()).toContain(TEST_USERS[1].email)
+    expect(wrapper.findAll('img')[1].attributes('src')).toContain(TEST_USERS[1].email)
 
-    expect(wrapper.text()).toContain('Jane Doe')
-    expect(wrapper.text()).toContain('jane@doe.com')
-    expect(wrapper.findAll('img')[1].attributes('src')).toBe('https://i.pravatar.cc/40?u=2')
-
-    expect(wrapper.text()).toContain('Joe Doe')
-    expect(wrapper.text()).toContain('joe@doe.com')
-    expect(wrapper.findAll('img')[2].attributes('src')).toBe('https://i.pravatar.cc/40?u=3')
+    expect(wrapper.text()).toContain(TEST_USERS[2].name)
+    expect(wrapper.text()).toContain(TEST_USERS[2].email)
+    expect(wrapper.findAll('img')[2].attributes('src')).toContain(TEST_USERS[2].email)
   })
 })

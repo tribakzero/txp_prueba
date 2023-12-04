@@ -1,21 +1,10 @@
 <script setup>
-const users = [
-  {
-    name: 'John Doe',
-    email: 'john@doe.com',
-    avatar: 'https://i.pravatar.cc/40?u=1'
-  },
-  {
-    name: 'Jane Doe',
-    email: 'jane@doe.com',
-    avatar: 'https://i.pravatar.cc/40?u=2'
-  },
-  {
-    name: 'Joe Doe',
-    email: 'joe@doe.com',
-    avatar: 'https://i.pravatar.cc/40?u=3'
-  }
-]
+import { useUsersStore } from '../stores/users';
+
+const usersStore = useUsersStore();
+usersStore.loadUsers();
+
+const avatar = (email) => `https://i.pravatar.cc/40?u=${email}`;
 </script>
 
 <template>
@@ -30,9 +19,9 @@ const users = [
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user.email">
+        <tr v-for="user in usersStore.users" :key="user.email">
           <td class="w-16 whitespace-normal">
-            <img class="w-10" :src="user.avatar" :alt="user.name" />
+            <img class="w-10" :src="avatar(user.email)" :alt="user.name" />
           </td>
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
