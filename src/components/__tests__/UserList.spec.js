@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import { useUsersStore } from '@/stores/users'
-import UserList from '../UserList.vue'
+import UserList from '@/components/UserList.vue'
 import TEST_USERS from '@/mocks/users'
 
 describe('UserList', () => {
@@ -12,14 +12,16 @@ describe('UserList', () => {
   beforeEach(() => {
     wrapper = mount(UserList, {
       global: {
-        plugins: [createTestingPinia({
-          initialState: {
-            users: {
-              users: TEST_USERS
+        plugins: [
+          createTestingPinia({
+            initialState: {
+              users: {
+                users: TEST_USERS
+              }
             }
-          },
-        })],
-      },
+          })
+        ]
+      }
     })
 
     store = useUsersStore()
@@ -45,5 +47,15 @@ describe('UserList', () => {
     expect(wrapper.text()).toContain(TEST_USERS[2].name)
     expect(wrapper.text()).toContain(TEST_USERS[2].email)
     expect(wrapper.findAll('img')[2].attributes('src')).toContain(TEST_USERS[2].email)
+  })
+
+  it('renders a message when there are no users', async () => {
+    await store.$patch({ users: [] })
+    expect(wrapper.text()).toContain('No users found')
+  })
+
+  it('renders a message when users are being loaded', async () => {
+    await store.$patch({ isLoading: true })
+    expect(wrapper.text()).toContain('Loading users...')
   })
 })

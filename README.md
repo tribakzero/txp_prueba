@@ -22,7 +22,12 @@ Challenge solution built by Alejandro Camarillo. Using a combination of Vue 3, V
     - I know I could also make this work without Pinia, but I've been thinking on how this project could grow, if the API was a little more versatile I'd even prefer using Vue Query to manage the requests, loading and error scenarios without any hassle.
     - Used Pinia to handle the data with a simple store for the users and an action to trigger the API call, which is moved to a separated place to prevent mixing responsibilities between the store and the API request(s).
 
-[ ] Task 3: Add User Search Functionality
+[x] Task 3: Add User Search Functionality
+
+    - There was a little uncertainty inside the task description where it suggested that the search feature could use one or the other (name or email) as a filter, but at the same time it reads as it could use both at the same time. I went with the latter as it was a little more complex but in a real scenario I would be asking the team for a definition instead so that the ticket was clearer and we only do what was expected, not what we assumed.
+    - Filtering works locally, I initially thought it could be done via the API itself, but it isn't as smart (even when you can do [partial lookups via this undocumented syntax](https://github.com/typicode/jsonplaceholder/issues/156), it can't search on two different object properties at the same time, there's [an open issue](https://github.com/typicode/json-server/issues/938) asking for an `or` logic to the filters, but has been stale since 2021).
+    - There's a "hack" to how User Rows are being styled, the avatar is pushed to give space to the whole row, but there could be some edge cases where this seems badly, the problem is mostly related to the top-border added to each row, these are 100% the size of the container, but the rows should have a padding inside, I'm still considering how to solve this, may need to style each TD to have said padding so that both the start and the end have the space around them, not only the avatar as it is right now, a nice challenge for the next task.
+    - Added a couple transitional scenarios that aren't considered in the designs, I like when designs cover these scenarios, but since they are pretty obvious it's easy to imagine them and build them directly on the code instead.
 
 [ ] Task 4: Styling
 
