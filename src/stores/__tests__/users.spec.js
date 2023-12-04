@@ -5,12 +5,14 @@ import api from '@/api/users'
 import TEST_USERS from '@/mocks/users'
 
 describe('Users Store', () => {
+  let store
+
   beforeEach(() => {
     setActivePinia(createPinia())
+    store = useUsersStore()
   })
 
   it('should load users', async () => {
-    const store = useUsersStore()
     expect(store.users).toEqual([])
     api.getUsers = vi.fn().mockResolvedValue(TEST_USERS)
     await store.loadUsers()
@@ -18,7 +20,6 @@ describe('Users Store', () => {
   })
 
   it('should filter users properly', async () => {
-    const store = useUsersStore()
     store.users = TEST_USERS
     store.filterUsers('Jo')
     expect(store.filteredUsers).toEqual([
@@ -43,9 +44,30 @@ describe('Users Store', () => {
     store.filterUsers('Non Existing User Name')
     expect(store.filteredUsers).toEqual([])
   })
+  
+  it('should work with name and email', async () => {
+    store.users = TEST_USERS
+
+    store.filterUsers('John Doe')
+    expect(store.filteredUsers).toEqual([
+      {
+        id: 1,
+        name: 'John Doe',
+        email: 'john@doe.com'
+      }
+    ])
+
+    store.filterUsers('joe@doe.com')
+    expect(store.filteredUsers).toEqual([
+      {
+        id: 3,
+        name: 'Joe Doe',
+        email: 'joe@doe.com'
+      }
+    ])
+  })
 
   it('should return isLoading properly', async () => {
-    const store = useUsersStore()
     expect(store.isLoading).toBe(false)
     api.getUsers = vi.fn().mockResolvedValue(TEST_USERS)
     store.loadUsers()

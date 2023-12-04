@@ -36,17 +36,17 @@ describe('UserList', () => {
   })
 
   it('renders a name, email and avatar for each user', () => {
-    expect(wrapper.text()).toContain(TEST_USERS[0].name)
-    expect(wrapper.text()).toContain(TEST_USERS[0].email)
-    expect(wrapper.findAll('img')[0].attributes('src')).toContain(TEST_USERS[0].email)
+    expect(wrapper.findAll('tbody tr')[0].text()).toContain(TEST_USERS[0].name)
+    expect(wrapper.findAll('tbody tr')[0].text()).toContain(TEST_USERS[0].email)
+    expect(wrapper.findAll('tbody tr')[0].find('img').attributes('src')).toContain(TEST_USERS[0].email)
 
-    expect(wrapper.text()).toContain(TEST_USERS[1].name)
-    expect(wrapper.text()).toContain(TEST_USERS[1].email)
-    expect(wrapper.findAll('img')[1].attributes('src')).toContain(TEST_USERS[1].email)
+    expect(wrapper.findAll('tbody tr')[1].text()).toContain(TEST_USERS[1].name)
+    expect(wrapper.findAll('tbody tr')[1].text()).toContain(TEST_USERS[1].email)
+    expect(wrapper.findAll('tbody tr')[1].find('img').attributes('src')).toContain(TEST_USERS[1].email)
 
-    expect(wrapper.text()).toContain(TEST_USERS[2].name)
-    expect(wrapper.text()).toContain(TEST_USERS[2].email)
-    expect(wrapper.findAll('img')[2].attributes('src')).toContain(TEST_USERS[2].email)
+    expect(wrapper.findAll('tbody tr')[2].text()).toContain(TEST_USERS[2].name)
+    expect(wrapper.findAll('tbody tr')[2].text()).toContain(TEST_USERS[2].email)
+    expect(wrapper.findAll('tbody tr')[2].find('img').attributes('src')).toContain(TEST_USERS[2].email)
   })
 
   it('renders a message when there are no users', async () => {
