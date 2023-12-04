@@ -1,22 +1,15 @@
 <script setup>
-import UserList from '@/components/UserList.vue'
-import UserSearch from '@/components/UserSearch.vue'
+import TopBar from '@/components/TopBar.vue'
+import HeaderBar from '@/components/HeaderBar.vue'
+import UsersSection from '@/components/UsersSection.vue'
 </script>
 
 <template>
-  <div class="h-screen m-0">
-    <header class="bg-white border-b border-b-slate-200">
-      <h1 class="p-3">
-        <img alt="Vue logo" class="mx-auto" src="@/assets/traxporta.png" width="50" height="50" />
-      </h1>
-    </header>
-
-    <div class="bg-white m-4">
-      <div class="p-1 border border-slate-200 rounded-3xl">
-        <h2 class="text-xl font-semibold text-center pt-4">Users</h2>
-        <UserSearch />
-        <UserList />
-      </div>
+  <div class="m-0 bg-gray-50">
+    <TopBar />
+    <div class="grid grid-cols-12 gap-4 h-screen">
+      <HeaderBar />
+      <UsersSection />
     </div>
   </div>
 </template>

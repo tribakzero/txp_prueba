@@ -29,7 +29,12 @@ Challenge solution built by Alejandro Camarillo. Using a combination of Vue 3, V
     - There's a "hack" to how User Rows are being styled, the avatar is pushed to give space to the whole row, but there could be some edge cases where this seems badly, the problem is mostly related to the top-border added to each row, these are 100% the size of the container, but the rows should have a padding inside, I'm still considering how to solve this, may need to style each TD to have said padding so that both the start and the end have the space around them, not only the avatar as it is right now, a nice challenge for the next task.
     - Added a couple transitional scenarios that aren't considered in the designs, I like when designs cover these scenarios, but since they are pretty obvious it's easy to imagine them and build them directly on the code instead.
 
-[ ] Task 4: Styling
+[x] Task 4: Styling
+
+    - I made a lot of specific tailwind classes to try to be accurate, in a more realistic scenario we should modify the theme to prevent us from typing manual classes and to stick to our own conventions.
+    - Added some basic responsive elements so that the site behaves properly in different screens, there are some edge cases that would need to be implemented otherwise to fit, these I consider out of the scope.
+    - Since Tailwind has this flaw of making the markup "ugly", I needed to add a couple presentational components, these have no tests for conveniency, but could have some tests to see if a certain element exists or not, didn't really found it that relevant to add them.
+    - I tried to make it as accurate as possible, but to reach pixel perfection I'd need to have an inspectable source, not a single image. Still I'm happy with the result both in style and in functionality. I'll let it settle through the night, tomorrow I'll see what else I can do in an extra commit, otherwise I'll share it with you.
 
 ## Project Setup
 
